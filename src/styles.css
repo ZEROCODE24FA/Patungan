@@ -1,0 +1,353 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap');
+
+:root {
+  --navy: #1b2a41;
+  --navy-soft: #324a5f;
+  --gold: #b8975a;
+  --gold-dark: #9a7b44;
+  --cream: #f6f3ec;
+  --paper: #ffffff;
+  --line: #e2ddd0;
+  --muted: #6b7280;
+  --green: #3f7d5c;
+  --red: #a4453f;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--navy);
+  background: var(--cream);
+}
+
+.app-wrap {
+  max-width: 760px;
+}
+
+.hero {
+  background: var(--navy);
+  color: var(--paper);
+  text-align: center;
+  padding: 2.75rem 0 2.25rem;
+  border-bottom: 4px solid var(--gold);
+}
+
+.hero-badge {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  padding: 0.3rem 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 800;
+  font-size: clamp(2.4rem, 7vw, 3.6rem);
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.hero-sub {
+  color: #c9d1da;
+  margin: 0.4rem 0 1rem;
+}
+
+.hero-date {
+  display: inline-block;
+  color: var(--gold);
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--gold);
+  border-radius: 10px;
+  padding: 1.4rem;
+  box-shadow: 0 4px 14px rgba(27, 42, 65, 0.07);
+}
+
+.panel-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.item-line {
+  padding: 0.25rem 0.6rem;
+  border-color: var(--line) !important;
+  border-radius: 6px;
+}
+
+.item-line:hover {
+  background: #faf8f2;
+}
+
+.item-even {
+  background: #fbf9f4;
+}
+
+.item-no {
+  width: 1.75rem;
+  color: var(--gold-dark);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.item-subtotal {
+  min-width: 90px;
+  text-align: right;
+  font-weight: 600;
+}
+
+.form-control {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--navy);
+  background: var(--paper);
+}
+
+.form-control:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 0.2rem rgba(184, 151, 90, 0.25);
+}
+
+.pajak-input {
+  width: 90px;
+  text-align: right;
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.btn-primary {
+  background: var(--navy);
+  border: 1px solid var(--navy);
+  color: var(--paper);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: var(--navy-soft);
+  border-color: var(--navy-soft);
+  color: var(--paper);
+}
+
+.btn-gold {
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  color: var(--paper);
+}
+
+.btn-gold:hover,
+.btn-gold:focus {
+  background: var(--gold-dark);
+  border-color: var(--gold-dark);
+  color: var(--paper);
+}
+
+.btn-outline-danger {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.btn-outline-danger:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--paper);
+}
+
+.btn-outline-secondary {
+  color: var(--navy);
+  border-color: var(--line);
+  background: var(--paper);
+}
+
+.btn-outline-secondary:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--paper);
+}
+
+.btn:disabled {
+  background: #ece8de;
+  border-color: #ece8de;
+  color: #a39d8c;
+}
+
+.contoh-box {
+  border: 1px dashed var(--gold);
+  background: #fbf6ea;
+  color: var(--navy-soft);
+  padding: 0.65rem 0.9rem;
+  margin-bottom: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.contoh-warn {
+  border: 1px solid var(--red);
+  background: var(--red);
+  color: var(--paper);
+  animation: goyang 0.35s;
+}
+
+@keyframes goyang {
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+.summary label {
+  color: var(--navy-soft);
+}
+
+.per-orang {
+  background: var(--navy);
+  color: var(--paper);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+}
+
+.per-orang-label {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.per-orang-nominal {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.badge {
+  border-radius: 999px;
+  padding: 0.4em 0.9em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+.kat-murah {
+  background: var(--green);
+  color: var(--paper);
+}
+
+.kat-wajar {
+  background: var(--gold);
+  color: var(--paper);
+}
+
+.kat-mahal {
+  background: var(--red);
+  color: var(--paper);
+}
+
+@media (max-width: 576px) {
+  .per-orang-nominal {
+    font-size: 1.4rem;
+  }
+}
+
+.nota {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: 'Courier New', monospace;
+  color: #000;
+  font-size: 13px;
+}
+
+.nota-head {
+  text-align: center;
+  border-bottom: 2px dashed #000;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.nota-head h1 {
+  font-size: 1.6rem;
+  letter-spacing: 0.25em;
+  margin: 0;
+}
+
+.nota-head p {
+  margin: 0.1rem 0;
+}
+
+.nota-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.nota-table th {
+  border-bottom: 1px solid #000;
+  padding: 0.25rem 0;
+  text-align: left;
+}
+
+.nota-table td {
+  padding: 0.2rem 0;
+}
+
+.nota-table .r {
+  text-align: right;
+}
+
+.nota-sum {
+  border-top: 2px dashed #000;
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.nota-sum > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.1rem 0;
+}
+
+.nota-sum .bold {
+  font-weight: 700;
+}
+
+.nota-final {
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0 !important;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.nota-foot {
+  text-align: center;
+  margin-top: 1rem;
+  border-top: 2px dashed #000;
+  padding-top: 0.75rem;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+  @page {
+    margin: 12mm;
+  }
+}

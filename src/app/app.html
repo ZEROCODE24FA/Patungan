@@ -1,0 +1,175 @@
+
+<div class="d-print-none">
+  <header class="hero">
+    <div class="container app-wrap">
+      <div class="hero-badge">Split Bill</div>
+      <h1 class="hero-title">PATUNGAN</h1>
+      <p class="hero-sub">Hitung tagihan bareng, adil untuk semua.</p>
+      <p class="hero-date">{{ tanggal | date: 'EEEE, d MMMM y' }}</p>
+    </div>
+  </header>
+
+  <main class="container app-wrap py-4">
+    <!-- Daftar item -->
+    <section class="panel mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2 class="h5 mb-0 fw-bold">Daftar Item</h2>
+        @if (items().length > 0) {
+          <button type="button" class="btn btn-link btn-sm link-dark p-0" (click)="clear()">
+            Kosongkan
+          </button>
+        }
+      </div>
+
+      @for (item of items(); track item.id; let no = $index, even = $even, last = $last) {
+        <div
+          class="item-line d-flex align-items-center"
+          [class.item-even]="even"
+          [class.border-bottom]="!last"
+        >
+          <span class="item-no">{{ no + 1 }}</span>
+          <div class="flex-grow-1">
+            <app-item-row
+              [item]="item"
+              (qtyChange)="setQty(item.id, $event)"
+              (remove)="remove($event)"
+            />
+          </div>
+        </div>
+      } @empty {
+        <div class="text-center text-muted py-4">Belum ada item.</div>
+      }
+
+      <p class="text-end fw-bold mt-3 mb-0">
+        Subtotal: {{ subtotal() | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}
+      </p>
+
+      <div class="row g-2 mt-2">
+        <div class="col-12 col-md-6">
+          <input
+            #nameInput
+            type="text"
+            class="form-control"
+            placeholder="Nama item"
+            [(ngModel)]="newName"
+            (keyup.enter)="add(); nameInput.focus()"
+          />
+        </div>
+        <div class="col-7 col-md-3">
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Harga"
+            [(ngModel)]="newPrice"
+            (keyup.enter)="add(); nameInput.focus()"
+          />
+        </div>
+        <div class="col-5 col-md-3 d-grid">
+          <button type="button" class="btn btn-primary" (click)="add(); nameInput.focus()">
+            Tambah
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ringkasan -->
+    <section class="panel summary">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <label>Jumlah orang</label>
+        <app-stepper
+          [value]="jumlahOrang()"
+          (valueChange)="jumlahOrang.set($event)"
+          [min]="1"
+        />
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <label for="pajak">Pajak dan layanan (%)</label>
+        <input
+          id="pajak"
+          type="number"
+          min="0"
+          class="form-control form-control-sm pajak-input"
+          [ngModel]="pajakPersen()"
+          (ngModelChange)="setPajak($event)"
+        />
+      </div>
+
+      <hr />
+
+      <div class="d-flex justify-content-between">
+        <span>Subtotal</span>
+        <span>{{ subtotal() | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}</span>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span>Pajak dan layanan ({{ pajakPersen() }}%)</span>
+        <span>{{ pajak() | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}</span>
+      </div>
+      <div class="d-flex justify-content-between fw-semibold">
+        <span>Total</span>
+        <span>{{ total() | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}</span>
+      </div>
+
+      <div class="per-orang d-flex justify-content-between align-items-center mt-3">
+        <div>
+          <div class="per-orang-label">Per orang</div>
+          <span class="badge {{ kategori().kelas }}">{{ kategori().label }}</span>
+        </div>
+        <div class="per-orang-nominal">
+          {{ perOrang() | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-dark w-100 mt-3" (click)="cetak()">
+         Cetak Nota / Simpan PDF
+      </button>
+    </section>
+  </main>
+
+  <footer class="text-center text-muted small pb-4">Patungan &middot; Tugas Pemrograman Front End</footer>
+</div>
+
+
+<div class="nota d-none d-print-block">
+  <div class="nota-head">
+    <h1>PATUNGAN</h1>
+    <p>Nota Pembagian Tagihan</p>
+    <p>{{ tanggal | date: 'EEEE, d MMMM y' }}</p>
+  </div>
+
+  <table class="nota-table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th class="r">Qty</th>
+        <th class="r">Harga</th>
+        <th class="r">Jumlah</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of items(); track item.id) {
+        <tr>
+          <td>{{ item.name }}</td>
+          <td class="r">{{ item.qty }}</td>
+          <td class="r">{{ item.price | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}</td>
+          <td class="r">
+            {{ item.price * item.qty | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="nota-sum">
+    <div><span>Subtotal</span><span>{{ subtotal() | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}</span></div>
+    <div><span>Pajak dan layanan ({{ pajakPersen() }}%)</span><span>{{ pajak() | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}</span></div>
+    <div class="bold"><span>Total</span><span>{{ total() | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}</span></div>
+    <div><span>Jumlah orang</span><span>{{ jumlahOrang() }}</span></div>
+    <div class="nota-final">
+      <span>PER ORANG ({{ kategori().label }})</span>
+      <span>{{ perOrang() | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}</span>
+    </div>
+  </div>
+
+  <p class="nota-foot">Terima kasih sudah patungan!</p>
+</div>
